@@ -4,31 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
+/**
+ * Filter rule that removes all flights from List, which has segments with
+ * departure date before current moment
+ */
+
 public class BeforeCurrentMomentRule implements IFilterRule
 {
-	
+
 	@Override
-	public List<Flight> filterFlights(List<Flight> inputFlightList)
+	public boolean filterCondition(Segment segment)
 	{
-		List<Flight> filteredList = new ArrayList<Flight>();
-		
-		for (Flight flight : inputFlightList)
-		{
-			boolean segmentRemoved = false;
-			
-			for (Segment segment : flight.getSegments())
-			{
-				if (LocalDateTime.now().isAfter(segment.getDepartureDate()))
-				{
-					segmentRemoved = true;
-					break;
-				}
-			}
-			
-			if (!segmentRemoved) filteredList.add(flight);
-		}
-		
-		return filteredList;
+		return LocalDateTime.now().isAfter(segment.getDepartureDate());
 	}
 
 }

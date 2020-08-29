@@ -3,30 +3,17 @@ package com.gridnine.testing;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Filter rule that removes all flights from List, which has segments with
+ * arrival date before departure date
+ */
+
 public class ArrivalBeforeDepartureRule implements IFilterRule
 {
-	
-	@Override
-	public List<Flight> filterFlights(List<Flight> inputFlightList)
-	{
-		List<Flight> filteredList = new ArrayList<Flight>();
-		
-		for (Flight flight : inputFlightList)
-		{
-			boolean segmentRemoved = false;
-			
-			for (Segment segment : flight.getSegments())
-			{
-				if (segment.getDepartureDate().isAfter(segment.getArrivalDate()))
-				{
-					segmentRemoved = true;
-					break;
-				}
-			}
-			
-			if (!segmentRemoved) filteredList.add(flight);
-		}
-		return filteredList;
-	}
 
+	@Override
+	public boolean filterCondition(Segment segment)
+	{
+		return segment.getDepartureDate().isAfter(segment.getArrivalDate());
+	}
 }

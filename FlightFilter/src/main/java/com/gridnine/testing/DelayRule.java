@@ -3,18 +3,34 @@ package com.gridnine.testing;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+
+/**
+ * Filter rule that removes all flights from List, which has segments with delay
+ * between arrival and departure longer than delayHours
+ */
 
 public class DelayRule implements IFilterRule
 {
-	private static int DELAY_HOURS = 2;
-	
-	public static void setHoursGap(int gap)
+	private int delayHours;
+
+	public int getDelayHours()
 	{
-		if (gap > 0) DELAY_HOURS = gap;
+		return delayHours;
 	}
-	public static int getHoursGap()
+
+	public DelayRule()
 	{
-		return DELAY_HOURS;
+		delayHours = 2;
+	}
+
+	public DelayRule(int delayHours)
+	{
+		if (delayHours > 0)
+		{
+			this.delayHours = delayHours;
+		}
 	}
 
 	@Override
@@ -31,8 +47,9 @@ public class DelayRule implements IFilterRule
 			{
 				for (int i = 0; i < segments.size() - 1; i++)
 				{
-					long delayHours = segments.get(i).getArrivalDate().until(segments.get(i + 1).getDepartureDate(), ChronoUnit.HOURS);
-					if (delayHours > DELAY_HOURS)
+					long delayHours = segments.get(i).getArrivalDate().until(segments.get(i + 1).getDepartureDate(),
+							ChronoUnit.HOURS);
+					if (delayHours > this.delayHours)
 					{
 						segmentRemoved = true;
 						break;
@@ -46,4 +63,9 @@ public class DelayRule implements IFilterRule
 		return filteredList;
 	}
 
+	@Override
+	public boolean filterCondition(Segment segment)
+	{
+		throw new NotImplementedException();
+	}
 }

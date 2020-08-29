@@ -3,7 +3,6 @@ package com.gridnine.testing;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -66,6 +65,6 @@ public class DelayRule implements IFilterRule
 	@Override
 	public boolean filterCondition(Segment segment)
 	{
-		throw new NotImplementedException();
+		return false;
 	}
 }

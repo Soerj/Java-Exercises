@@ -2,7 +2,6 @@ package com.gridnine.testing;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Exception;
 
 public interface IFilterRule
 {
